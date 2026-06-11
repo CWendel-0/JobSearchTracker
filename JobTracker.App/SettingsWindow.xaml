@@ -1,0 +1,157 @@
+<Window x:Class="JobTracker.App.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Settings"
+        Height="620" Width="560"
+        MinHeight="540"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="CanResizeWithGrip"
+        Background="{StaticResource SurfaceBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TabControl Grid.Row="0" Margin="12,12,12,0" BorderThickness="1"
+                    BorderBrush="{StaticResource BorderBrush}">
+
+            <!-- Tab 1: Google Sheets -->
+            <TabItem Header="Google Sheets">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="16">
+                    <StackPanel>
+                        <TextBlock Text="Service Account Key File  (.json)"
+                                   Style="{StaticResource FieldLabel}" Margin="0,8,0,4"/>
+                        <Grid Margin="0,0,0,4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox x:Name="ServiceAccountPathBox"
+                                     Grid.Column="0" Padding="8,6" Margin="0,0,8,0"/>
+                            <Button Content="Browse..." Grid.Column="1" Padding="12,6"
+                                    Click="BrowseServiceAccount_Click"/>
+                        </Grid>
+                        <TextBlock Text="Share your Sheet with the service account email as Editor"
+                                   FontSize="10" Foreground="#9E9E9E" Margin="0,0,0,16"/>
+                        <TextBlock Text="Spreadsheet ID" Style="{StaticResource FieldLabel}"/>
+                        <TextBox x:Name="SpreadsheetIdBox" Padding="8,6" Margin="0,0,0,4"/>
+                        <TextBlock Text="From your sheet URL:  .../spreadsheets/d/[SPREADSHEET_ID]/edit"
+                                   FontSize="10" Foreground="#9E9E9E"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- Tab 2: Sources -->
+            <TabItem Header="Sources">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="16">
+                    <StackPanel>
+                        <TextBlock Text="Free Sources (no API key required)"
+                                   Style="{StaticResource SectionHeading}" Margin="0,8,0,8"/>
+                        <CheckBox x:Name="UsaJobsCheck"          Content="USAJOBS"          Margin="0,0,0,6"/>
+                        <!-- Dice removed: public API shut down 2017 -->
+                        <CheckBox x:Name="RemoteJobsFinderCheck" Content="RemoteJobsFinder" Margin="0,0,0,6"/>
+                        <CheckBox x:Name="RemotiveCheck"         Content="Remotive"         Margin="0,0,0,6"/>
+                        <CheckBox x:Name="RemoteOkCheck"         Content="Remote OK"        Margin="0,0,0,6"/>
+                        <CheckBox x:Name="HimalayasCheck"        Content="Himalayas"        Margin="0,0,0,6"/>
+                        <CheckBox x:Name="ArbeitnowCheck"        Content="Arbeitnow"        Margin="0,0,0,6"/>
+                        <CheckBox x:Name="WeWorkRemotelyCheck"   Content="We Work Remotely" Margin="0,0,0,6"/>
+                        <CheckBox x:Name="WorkingNomadsCheck"    Content="Working Nomads"   Margin="0,0,0,16"/>
+
+                        <Separator Background="{StaticResource BorderBrush}" Margin="0,0,0,8"/>
+                        <TextBlock Text="API Key Sources (register for a free key first)"
+                                   Style="{StaticResource SectionHeading}" Margin="0,0,0,8"/>
+
+                        <TextBlock Text="USAJOBS" FontWeight="SemiBold" FontSize="12" Margin="0,0,0,6"/>
+                        <TextBlock Text="API Key" Style="{StaticResource FieldLabel}"/>
+                        <TextBox x:Name="UsaJobsApiKeyBox" Padding="8,6" Margin="0,0,0,6"/>
+                        <TextBlock Text="Registration Email (sent as User-Agent)" Style="{StaticResource FieldLabel}"/>
+                        <TextBox x:Name="UsaJobsEmailBox" Padding="8,6" Margin="0,0,0,4"/>
+                        <TextBlock Text="Register at developer.usajobs.gov/apirequest (instant)"
+                                   FontSize="10" Foreground="#9E9E9E" Margin="0,0,0,16"/>
+
+                        <Separator Background="{StaticResource BorderBrush}" Margin="0,0,0,8"/>
+                        <CheckBox x:Name="AdzunaCheck" Content="Adzuna"
+                                  FontWeight="SemiBold" FontSize="12" Margin="0,0,0,8"/>
+                        <TextBlock Text="App ID" Style="{StaticResource FieldLabel}"/>
+                        <TextBox x:Name="AdzunaAppIdBox" Padding="8,6" Margin="0,0,0,6"/>
+                        <TextBlock Text="API Key" Style="{StaticResource FieldLabel}"/>
+                        <TextBox x:Name="AdzunaApiKeyBox" Padding="8,6" Margin="0,0,0,4"/>
+                        <TextBlock Text="Register at developer.adzuna.com (free)"
+                                   FontSize="10" Foreground="#9E9E9E" Margin="0,0,0,16"/>
+
+                        <Separator Background="{StaticResource BorderBrush}" Margin="0,0,0,8"/>
+                        <CheckBox x:Name="TheMuseCheck" Content="The Muse"
+                                  FontWeight="SemiBold" FontSize="12" Margin="0,0,0,8"/>
+                        <TextBlock Text="API Key" Style="{StaticResource FieldLabel}"/>
+                        <TextBox x:Name="TheMuseApiKeyBox" Padding="8,6" Margin="0,0,0,4"/>
+                        <TextBlock Text="Register at themuse.com/developers/api/v2 (free)"
+                                   FontSize="10" Foreground="#9E9E9E"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- Tab 3: Filters -->
+            <TabItem Header="Filters">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="16">
+                    <StackPanel>
+                        <!-- Experience levels -->
+                        <TextBlock Text="Experience Levels"
+                                   Style="{StaticResource SectionHeading}" Margin="0,8,0,4"/>
+                        <TextBlock Text="Include postings at these experience levels"
+                                   Style="{StaticResource FieldLabel}"/>
+                        <CheckBox x:Name="EntryLevelCheck"   Content="Entry Level   (0-2 years)"  Margin="0,4,0,4"/>
+                        <CheckBox x:Name="MidLevelCheck"     Content="Mid Level     (3-7 years)"  Margin="0,0,0,4"/>
+                        <CheckBox x:Name="SeniorLevelCheck"  Content="Senior Level  (8+ years)"   Margin="0,0,0,4"/>
+                        <CheckBox x:Name="ManagerLevelCheck" Content="Manager       (Engineering Manager, Director of Engineering, etc.)" Margin="0,0,0,4"/>
+                        <TextBlock Text="Postings with no stated requirement are always included and flagged with ⚠"
+                                   FontSize="10" Foreground="#9E9E9E" Margin="0,0,0,16"/>
+
+                        <Separator Background="{StaticResource BorderBrush}" Margin="0,0,0,8"/>
+
+                        <!-- Date range -->
+                        <TextBlock Text="Date Range"
+                                   Style="{StaticResource SectionHeading}" Margin="0,8,0,4"/>
+                        <TextBlock Text="Only include postings published within this many days (0 = no limit)"
+                                   Style="{StaticResource FieldLabel}"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
+                            <TextBox x:Name="DaysBackBox" Width="70" Padding="8,6"/>
+                            <TextBlock Text="days" VerticalAlignment="Center"
+                                       Margin="10,0,0,0" Foreground="{StaticResource SubtextBrush}"/>
+                        </StackPanel>
+
+                        <Separator Background="{StaticResource BorderBrush}" Margin="0,0,0,8"/>
+
+                        <TextBlock Text="Extra Include Keywords"
+                                   Style="{StaticResource SectionHeading}" Margin="0,8,0,4"/>
+                        <TextBlock Text="Additional job title keywords that qualify a posting (one per line)"
+                                   Style="{StaticResource FieldLabel}"/>
+                        <TextBox x:Name="ExtraIncludeBox" Height="80" AcceptsReturn="True"
+                                 TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
+                                 Padding="8,6" Margin="0,0,0,16"/>
+                        <TextBlock Text="Extra Exclude Keywords"
+                                   Style="{StaticResource SectionHeading}" Margin="0,0,0,4"/>
+                        <TextBlock Text="Keywords that disqualify a posting regardless of other rules (one per line)"
+                                   Style="{StaticResource FieldLabel}"/>
+                        <TextBox x:Name="ExtraExcludeBox" Height="80" AcceptsReturn="True"
+                                 TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
+                                 Padding="8,6"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+        </TabControl>
+
+        <!-- Save / Cancel -->
+        <Border Grid.Row="1" Background="White"
+                BorderBrush="{StaticResource BorderBrush}"
+                BorderThickness="0,1,0,0" Padding="16,10">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Cancel" Padding="16,8" Margin="0,0,8,0" Click="Cancel_Click"/>
+                <Button Content="Save" Style="{StaticResource PrimaryButton}"
+                        Padding="16,8" Click="Save_Click"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
